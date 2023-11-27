@@ -26,9 +26,9 @@ public class BaseSetup {
 
   // Configuration for logs.txt file
   FileAppender fileAppender = new FileAppender();
+  fileAppender.setLayout(new SimpleLayout());
   fileAppender.setLayout(new PatternLayout("%d{yyyy-MM-dd HH:mm:ss.SSSS} %p %m%n"));
   fileAppender.setFile("src/test/logs/logs.txt");
-  fileAppender.setLayout(new SimpleLayout());
   fileAppender.activateOptions();
 
   // Add the appender to the logger
