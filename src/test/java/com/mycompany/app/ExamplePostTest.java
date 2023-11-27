@@ -12,9 +12,9 @@ public class ExamplePostTest extends BaseSetup {
 
         Response response = given()
                 .header("Content-type", "application/json; charset=utf-8")
-                .param("phone","024-648-3804")
+                .param("id","1")
                 .when()
-                .get("/users")
+                .get("/posts")
                 .then()
                 .extract()
                 .response();
@@ -28,8 +28,9 @@ public class ExamplePostTest extends BaseSetup {
             logger.info("Status code is 200: Successful");
             // Get the body of the response as a string
             String body = response.getBody().toString();
+            String expectedBody = ("[\r\n  {\r\n    \"userId\": 1,\r\n    \"id\": 1,\r\n    \"title\": \"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\",\r\n    \"body\": \"quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto\"\r\n  }\r\n]");
             // Check if the body contains the expected data
-            if (body.contains("{\"id\": 10, \"name\": \"Clementina DuBuque\",\"username\": \"Moriah.Stanton\",\"email\": \"Rey.Padberg@karina.biz\",\"address\": {\"street\": \"Kattie Turnpike\",\"suite\": \"Suite 198\",\"city\": \"Lebsackbury\",\"zipcode\": \"31428-2261\",\"geo\": {\"lat\": \"-38.2386\",\"lng\": \"57.2232\"}},\"phone\": \"024-648-3804\",\"website\": \"ambrose.net\",\"company\": {\"name\": \"Hoeger LLC\",\"catchPhrase\": \"Centralized empowering task-force\",\"bs\": \"target end-to-end models\"}}")) {
+            if (body.contains(expectedBody)) {
                 // Log the body as valid
                 logger.info("Body is valid: Contains expected data");
             } else {
