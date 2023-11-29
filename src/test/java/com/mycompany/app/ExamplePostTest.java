@@ -6,15 +6,16 @@ import static io.restassured.RestAssured.given;
 
 public class ExamplePostTest extends BaseSetup {
 
+    String jsonContent = JsonFileReader.getJsonContent();
+
     // Api Post method test
     @Test
     public void postRequest() {
 
         Response response = given()
                 .header("Content-type", "application/json; charset=utf-8")
-                .param("id","1")
                 .when()
-                .get("/posts")
+                .get("/products/1")
                 .then()
                 .extract()
                 .response();
@@ -27,10 +28,12 @@ public class ExamplePostTest extends BaseSetup {
             // Log the status code as successful
             logger.info("Status code is 200: Successful");
             // Get the body of the response as a string
-            String body = response.getBody().toString();
-            String expectedBody = ("[\r\n  {\r\n    \"userId\": 1,\r\n    \"id\": 1,\r\n    \"title\": \"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\",\r\n    \"body\": \"quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto\"\r\n  }\r\n]");
+            String actualbody = response.getBody().asString();
+            logger.info(actualbody);
+            String expectedBody = jsonContent;
+            logger.info(expectedBody);
             // Check if the body contains the expected data
-            if (body.contains(expectedBody)) {
+            if (actualbody.equals(expectedBody)) {
                 // Log the body as valid
                 logger.info("Body is valid: Contains expected data");
             } else {

@@ -13,23 +13,7 @@ public class BaseSetup {
     public static void setup() {
 
             // Base url definition
-            RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
+            RestAssured.baseURI = "https://dummyjson.com/";
 
-            // Configuration for console log
-            ConsoleAppender consoleAppender = new ConsoleAppender();
-            consoleAppender.setLayout(new PatternLayout("%d{yyyy-MM-dd HH:mm:ss.SSSS} %p %m%n"));
-            consoleAppender.activateOptions();
-
-            // Add the appender to the logger
-            logger.addAppender(consoleAppender);
-
-            // Configuration for logs.txt file
-            FileAppender fileAppender = new FileAppender();
-            fileAppender.setLayout(new PatternLayout("%d{yyyy-MM-dd HH:mm:ss.SSSS} %p %m%n"));
-            fileAppender.setFile("src/test/logs/logs.txt");
-            fileAppender.activateOptions();
-
-            // Add the appender to the logger
-            logger.addAppender(fileAppender);
     }
 }
