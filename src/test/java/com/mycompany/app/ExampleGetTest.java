@@ -2,24 +2,28 @@ package com.mycompany.app;
 
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
-import static io.restassured.RestAssured.given;
 
+import java.util.Map;
+
+import static io.restassured.RestAssured.given;
 
 public class ExampleGetTest extends BaseSetup {
 
-    // Api Get method test
+    Map<String, String> jsonContentMap = JsonFileManager.getAllJsonContentsByFileName();
+
+    // Api Post method test
     @Test
     public void getRequest() {
 
         Response response = given()
                 .header("Content-type", "application/json; charset=utf-8")
                 .when()
-                .get("comments")
+                .get("/products/1")
                 .then()
                 .extract()
                 .response();
 
-        logger.info("*****Test Started*****");
+        logger.info("***** Test Started ***** Get Method");
 
         int statusCode = response.getStatusCode();
         // Check if the status code is 200
@@ -27,9 +31,16 @@ public class ExampleGetTest extends BaseSetup {
             // Log the status code as successful
             logger.info("Status code is 200: Successful");
             // Get the body of the response as a string
-            String body = response.getBody().toString();
+            String actualbody = response.getBody().asString();
+            logger.info(actualbody);
+            // Get the body of the expected as a string
+            String expectedBody = jsonContentMap.get("getBody.json");
+            expectedBody = expectedBody.replaceAll("(?<!\")\\s*(\\d+)\\s*(?!\")", "$1")
+                    .replaceAll("\\s*\"\\s*", "\"")
+                    .replaceAll("\\s*\\[\\s*", "[").replaceAll("\\s*\\]\\s*", "]");
+            logger.info(expectedBody);
             // Check if the body contains the expected data
-            if (body.contains("[{\"userId\": 1, \"id\": 1, \"title\": \"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\", \"body\": \"quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto\"}]")) {
+            if (actualbody.equals(expectedBody)) {
                 // Log the body as valid
                 logger.info("Body is valid: Contains expected data");
             } else {
