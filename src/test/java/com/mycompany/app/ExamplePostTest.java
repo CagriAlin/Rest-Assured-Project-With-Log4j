@@ -15,7 +15,7 @@ public class ExamplePostTest extends BaseSetup {
     public void postRequest() {
 
         Map<String, String> jsonContentMap = JsonFileManager.getAllJsonContentsByFileName();
-        String requestPostBody = jsonContentMap.get("postBody.json");
+        String requestPostBody = jsonContentMap.get("postRequestBody.json");
 
         Response response = given()
                 .header("Content-type", "application/json; charset=utf-8")
@@ -37,9 +37,9 @@ public class ExamplePostTest extends BaseSetup {
             String actualbody = response.getBody().asString();
             logger.info(actualbody);
             // Get the body of the request as a string
-            String expectedBody = jsonContentMap.get("postBody.json");
+            String expectedBody = jsonContentMap.get("postResponseBody.json");
             expectedBody = expectedBody.replaceAll("(?<!\")\\s*(\\d+)\\s*(?!\")", "$1")
-                                        .replaceAll("\\s*\"\\s*", "\"");
+                    .replaceAll("\\s*\"\\s*", "\"");
             logger.info(expectedBody);
             // Check if the body contains the expected data
             if (actualbody.contains(expectedBody)) {

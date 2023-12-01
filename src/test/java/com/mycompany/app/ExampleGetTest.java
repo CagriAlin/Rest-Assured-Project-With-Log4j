@@ -34,7 +34,7 @@ public class ExampleGetTest extends BaseSetup {
             String actualbody = response.getBody().asString();
             logger.info(actualbody);
             // Get the body of the expected as a string
-            String expectedBody = jsonContentMap.get("getBody.json");
+            String expectedBody = jsonContentMap.get("getResponseBody.json");
             expectedBody = expectedBody.replaceAll("(?<!\")\\s*(\\d+)\\s*(?!\")", "$1")
                     .replaceAll("\\s*\"\\s*", "\"")
                     .replaceAll("\\s*\\[\\s*", "[").replaceAll("\\s*\\]\\s*", "]");
